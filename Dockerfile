@@ -13,7 +13,7 @@ RUN chmod + /aliddns.sh
 
 # 添加定时任务
 RUN touch crontab.tmp \
-    && echo "*/1 * * * * /aliddns.sh >> /var/log/aliddns.log 2>&1" > crontab.tmp \
+    && echo "*/1 * * * * sh /aliddns.sh >> /var/log/aliddns.log 2>&1" > crontab.tmp \
     && crontab crontab.tmp \
     && rm -rf crontab.tmp
 
