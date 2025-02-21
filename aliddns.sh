@@ -44,17 +44,17 @@ ResolveDomain() {
         return 1
     fi
     upvalue=$(GetValueFromJson "$rslt" ".DomainRecords.Record[0].Value")
-    echo "域名指向： $upvalue"
+    echo "原指向： $upvalue"
     NEW_VALUE=$(GetIp)
     if [ -z "$NEW_VALUE" ]; then
-        echo "待解析值为空"
+        echo "新指向为空"
         return 1
     fi
 
-    echo "待解析值： $NEW_VALUE"
+    echo "新指向： $NEW_VALUE"
 
     if [ "$upvalue" = "$NEW_VALUE" ]; then
-        echo "已正确解析， 无需更新。"
+        echo "已正确解析， 无需更新"
     elif [ "$upvalue" = "null" ]; then
         echo "添加解析记录..."
         AddDomainRecord $NEW_VALUE
