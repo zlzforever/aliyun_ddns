@@ -9,7 +9,7 @@ COPY aliyun /usr/local/bin/aliyun
 
 # 将 aliddns.sh 文件复制到容器中
 ADD aliddns.sh /aliddns.sh
-RUN chmod 0644 /aliddns.sh
+RUN chmod + /aliddns.sh
 
 # 添加定时任务
 RUN touch crontab.tmp \
