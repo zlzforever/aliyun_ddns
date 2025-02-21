@@ -2,7 +2,7 @@
 FROM alpine:latest
 
 # 安装 cron
-RUN apk add --no-cache dcron jq curl
+RUN apk add --no-cache jq curl
 
 # 创建日志文件并设置权限
 RUN touch /var/log/cron.log /var/log/aliddns.log
@@ -11,10 +11,14 @@ RUN touch /var/log/cron.log /var/log/aliddns.log
 COPY aliyun /usr/local/bin/aliyun
 
 # 将 aliddns.sh 文件复制到容器中
-COPY aliddns.sh /aliddns.sh
+ADD aliddns.sh /aliddns.sh
+RUN chmod 0644 /aliddns.sh
 
 # 添加定时任务
-RUN echo "*/1 * * * * /aliddns.sh >> /var/log/aliddns.log 2>&1" > /etc/crontabs/root
+RUN touch crontab.tmp \
+    && echo "*/1 * * * * /aliddns.sh >> /var/log/aliddns.log 2>&1" > crontab.tmp \
+    && crontab crontab.tmp \
+    && rm -rf crontab.tmp
 
 # 启动 cron 服务
-CMD ["crond", "-f", "-d", "8"]
+CMD ["/usr/sbin/crond", "-f", "-d", "0"]
