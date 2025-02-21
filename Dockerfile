@@ -4,9 +4,6 @@ FROM alpine:latest
 # 安装 cron
 RUN apk add --no-cache jq curl
 
-# 创建日志文件并设置权限
-RUN touch /var/log/cron.log /var/log/aliddns.log
-
 # 安装 aliyun cli
 COPY aliyun /usr/local/bin/aliyun
 
