@@ -19,9 +19,11 @@ docker build . --file Dockerfile --tag zlzforever/aliyun_ddns
 
 ```
 docker run -d aliyun_ddns_domain1 \
+    -e ACCESS_KEY_ID= \
+    -e ACCESS_KEY_SECRET= \
     -e DNS_DOMAIN= \
     -e DNS_RR= \
-    -e DNS_DNS_TYPE= \
-    -e DNS_DNS_TTL=600 \
+    -e DNS_TYPE= \
+    -e DNS_TTL=600 \
     zlzforever/aliyun_ddns
 ```
