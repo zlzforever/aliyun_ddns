@@ -19,8 +19,8 @@ jobs:
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag zlzforever/aliyun_ddns
       - name: Build the Docker image
-        run: docker tag zlzforever/aliyun_ddns zlzforever/aliyun_ddns:1.0
+        run: docker tag zlzforever/aliyun_ddns zlzforever/aliyun_ddns:$(git rev-parse --short HEAD)
       - name: Publish the Docker image 1
         run: docker push zlzforever/aliyun_ddns
       - name: Publish the Docker image 2
-        run: docker push zlzforever/aliyun_ddns:1.0
+        run: docker push zlzforever/aliyun_ddns:$(git rev-parse --short HEAD)
