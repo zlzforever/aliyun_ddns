@@ -37,6 +37,7 @@ UpdateDomainRecord() {
 }
 
 ResolveDomain() {
+    echo "域名： $RR.$DOMAIN, 类型: $TYPE, TTL: $TTL"
     rslt=$(DescribeSubDomainRecords | grep TotalCount)
     echo "$rslt"
     if [ -z "$rslt" ]; then
@@ -44,16 +45,20 @@ ResolveDomain() {
         return 1
     fi
     upvalue=$(GetValueFromJson "$rslt" ".DomainRecords.Record[0].Value")
-    echo "域名指向：$upvalue"
+    echo "域名指向： $upvalue"
     NEW_VALUE=$(GetIp)
     if [ -z "$NEW_VALUE" ]; then
         echo "待解析值为空"
         return 1
     fi
-    echo "待解析值：$NEW_VALUE"
+
+    echo "待解析值： $NEW_VALUE"
 
     if [ "$upvalue" = "$NEW_VALUE" ]; then
         echo "已正确解析， 无需更新。"
+    elif [ "$upvalue" = "null" ]; then
+        echo "添加解析记录..."
+        AddDomainRecord $NEW_VALUE
     elif [ -n "$upvalue" ]; then
         echo "更新解析记录..."
         recordId=$(GetValueFromJson "$rslt" ".DomainRecords.Record[0].RecordId")
