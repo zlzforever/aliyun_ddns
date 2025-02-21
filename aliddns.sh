@@ -25,7 +25,7 @@ GetValueFromJson() {
 }
 
 DescribeSubDomainRecords() {
-    echo $(aliyun alidns DescribeDomainRecords --DomainName $DOMAIN --RRKeyWord $RR --Type $TYPE)
+    echo $(aliyun alidns DescribeDomainRecords --DomainName $DOMAIN --RRKeyWord $RR)
 }
 
 AddDomainRecord() {
