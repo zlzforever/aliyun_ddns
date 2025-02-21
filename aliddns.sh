@@ -15,7 +15,7 @@ aliyun configure set --profile dnsProfile \
 # aliyun alidns DescribeDomainRecords --DomainName linhecao.cn --RRKeyWord test
 
 GetIp() {
-    echo $(curl 4.ipw.cn)
+    echo $(curl -s 4.ipw.cn)
 }
 
 GetValueFromJson() {
@@ -39,7 +39,6 @@ UpdateDomainRecord() {
 ResolveDomain() {
     echo "域名： $RR.$DOMAIN, 类型: $TYPE, TTL: $TTL"
     rslt=$(DescribeSubDomainRecords | grep TotalCount)
-    echo "$rslt"
     if [ -z "$rslt" ]; then
         echo "未获取到阿里云查询结果"
         return 1
